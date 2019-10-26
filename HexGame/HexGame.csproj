@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net462</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MLEM" Version="1.2.2" />
+        <PackageReference Include="MLEM.Extended" Version="1.2.2" />
+        <PackageReference Include="MLEM.Startup" Version="1.2.1" />
+        <PackageReference Include="MLEM.Ui" Version="1.2.4" />
+        <PackageReference Include="MonoGame.Content.Builder" Version="3.7.0.9" />
+        <PackageReference Include="MonoGame.Extended" Version="3.7.0" />
+        <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.0.1708" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Content\Content.mgcb" />
+      <MonoGameContentReference Include="Content\Content.mgcb" />
+    </ItemGroup>
+
+    <Target Name="Contentless" BeforeTargets="BeforeBuild">
+        <Exec Command="..\..\Contentless\Build\Contentless.exe Content/Content.mgcb" />
+    </Target>
+</Project>
