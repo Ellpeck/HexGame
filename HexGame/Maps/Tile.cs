@@ -9,8 +9,8 @@ using MonoGame.Extended.TextureAtlases;
 namespace HexGame.Maps {
     public class Tile {
 
-        public static readonly UniformTextureAtlas Textures = new UniformTextureAtlas(MlemGame.LoadContent<Texture2D>("Textures/Tiles"), 8, 6);
-        public static readonly Point Size = new Point(32, 28);
+        public static readonly UniformTextureAtlas Textures = new UniformTextureAtlas(MlemGame.LoadContent<Texture2D>("Textures/Tiles"), 8, 9);
+        public static readonly Vector2 CellSize = new Vector2(32 * 0.75F, 28);
 
         private readonly TextureRegion texture;
         private readonly Point position;
@@ -21,17 +21,17 @@ namespace HexGame.Maps {
         }
 
         public void Draw(SpriteBatch batch) {
-            var dest = new Rectangle(this.GetDrawPoint(), this.texture.Size);
+            var dest = new Rectangle(GetDrawPoint(this.position), this.texture.Size);
             batch.Draw(this.texture, dest, Color.White);
-            batch.DrawCenteredString(GameImpl.Font, this.position.ToString(), dest.Location.ToVector2() + dest.Size.ToVector2() / 2, 0.1F, Color.White);
+            //batch.DrawCenteredString(GameImpl.Font, this.position.ToString(), dest.Location.ToVector2() + dest.Size.ToVector2() / 2, 0.1F, Color.White);
         }
 
-        private Point GetDrawPoint() {
-            var x = this.position.X * (Size.X * 0.75F).Floor();
-            var y = this.position.Y * Size.Y;
-            if (this.position.X % 2 == 1)
-                y += Size.Y / 2;
-            return new Point(x, y);
+        public static Point GetDrawPoint(Point position) {
+            var x = position.X * CellSize.X;
+            var y = position.Y * CellSize.Y;
+            if (position.X % 2 == 1)
+                y += CellSize.Y / 2;
+            return new Point(x.Floor(), y.Floor());
         }
 
     }

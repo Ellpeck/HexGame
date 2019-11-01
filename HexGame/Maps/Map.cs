@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MLEM.Cameras;
 
 namespace HexGame.Maps {
     public class Map {
@@ -21,8 +22,8 @@ namespace HexGame.Maps {
             }
         }
 
-        public void Draw(SpriteBatch batch) {
-            batch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(4));
+        public void Draw(SpriteBatch batch, Camera camera) {
+            batch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: camera.ViewMatrix);
             for (var y = 0; y < this.Height; y++) {
                 for (var x = 0; x < this.Width; x += 2)
                     this.DrawTile(batch, x, y);
